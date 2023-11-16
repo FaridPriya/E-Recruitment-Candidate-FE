@@ -1,0 +1,161 @@
+<c-alert [(visible)]="visible"
+         [dismissible]="dismissible"
+         color="danger"
+         fade
+         *ngIf="visible">
+  {{errorMessage}}
+</c-alert>
+
+<div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+        <c-card class="mx-4">
+          <c-card-body class="p-4">
+            <form cForm name="myForm" [formGroup]="attachedForm" (ngSubmit)="_submitForm()" class="needs-validation" ngNativeValidate>
+              <h1>Register</h1>
+              <p class="text-medium-emphasis">Apply for new job</p>
+
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <input cFormControl type="text" class="form-control" id="Name" placeholder="Full Name" formControlName="Name" required>
+                </c-input-group>
+                <c-col *ngFor="let validation of formValidationType.form">
+                  <label class="text-danger" *ngIf="
+                  getFormControl('Name')!.hasError(validation.type) && getFormControl('Name')!.invalid && (getFormControl('Name')!.dirty || getFormControl('Name')!.touched)
+                "> {{ validation.message}}</label>
+                </c-col>
+              </div>
+
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilPhone"></svg>
+                  </span>
+                  <input type="text" class="form-control" id="Phone Number" placeholder="Phone" formControlName="Phone" required>
+                </c-input-group>
+                <c-col *ngFor="let validation of formValidationType.form">
+                  <label class="text-danger" *ngIf="
+                  getFormControl('Phone')!.hasError(validation.type) && getFormControl('Phone')!.invalid && (getFormControl('Phone')!.dirty || getFormControl('Phone')!.touched)
+                "> {{ validation.message}}</label>
+              </c-col>
+              </div>
+
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilEnvelopeLetter"></svg>
+                  </span>
+                  <input type="text" class="form-control" id="Email" placeholder="Email" formControlName="Email" required>
+                </c-input-group>
+                <c-col *ngFor="let validation of formValidationType.form">
+                  <label class="text-danger" *ngIf="
+                  getFormControl('Email')!.hasError(validation.type) && getFormControl('Email')!.invalid && (getFormControl('Email')!.dirty || getFormControl('Email')!.touched)
+                "> {{ validation.message}}</label>
+              </c-col>
+              </div>
+
+              <!-- <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <select aria-label="Default select example" cSelect [(ngModel)]="selectedJob" formControlName="JobId">
+                    <option *ngFor="let item of listJob; index as i" [ngValue]="item.Id">{{item.Name}}</option>
+                </select>
+                </c-input-group>
+                <c-col *ngFor="let validation of formValidationType.form">
+                  <label class="text-danger" *ngIf="
+                  getFormControl('JobId')!.hasError(validation.type) && getFormControl('JobId')!.invalid && (getFormControl('JobId')!.dirty || getFormControl('JobId')!.touched)
+                "> {{ validation.message}}</label>
+                </c-col>
+              </div> -->
+
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <input type="text" class="form-control" id="Username" placeholder="Username" formControlName="Username" required>
+                </c-input-group>
+                <c-col *ngFor="let validation of formValidationType.form">
+                  <label class="text-danger" *ngIf="
+                  getFormControl('Username')!.hasError(validation.type) && getFormControl('Username')!.invalid && (getFormControl('Username')!.dirty || getFormControl('Username')!.touched)
+                "> {{ validation.message}}</label>
+              </c-col>
+              </div>
+
+              <div class="mb-3">
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilLockLocked"></svg>
+                  </span>
+                  <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" id="Password" placeholder="Password" formControlName="Password" required>
+                  <span cInputGroupText (click)="toggleFieldTextType()" class="switchType">
+                    <svg cIcon name="cilLockLocked" *ngIf="!fieldTextType"></svg>
+                    <svg cIcon name="cilLockUnlocked" *ngIf="fieldTextType"></svg>
+                  </span>
+                </c-input-group>
+                <c-col *ngFor="let validation of formValidationType.form">
+                  <label class="text-danger" *ngIf="
+                  getFormControl('Password')!.hasError(validation.type) && getFormControl('Password')!.invalid && (getFormControl('Password')!.dirty || getFormControl('Password')!.touched)
+                "> {{ validation.message}}</label>
+              </c-col>
+              </div>
+
+              <div class="mb-3">
+                <label for="file" class="form-label">Select Job</label>
+                <c-input-group>
+                  <span cInputGroupText>
+                    <svg cIcon name="cilBriefcase"></svg>
+                  </span>
+                  <select aria-label="Default select example" cSelect [(ngModel)]="selectedJob" formControlName="JobId">
+                    <option *ngFor="let item of listJob; index as i" [ngValue]="item.Id">{{item.Name}}</option>
+                </select>
+                </c-input-group>
+                <c-col *ngFor="let validation of formValidationType.form">
+                  <label class="text-danger" *ngIf="
+                  getFormControl('JobId')!.hasError(validation.type) && getFormControl('JobId')!.invalid && (getFormControl('JobId')!.dirty || getFormControl('JobId')!.touched)
+                "> {{ validation.message}}</label>
+                </c-col>
+              </div>
+              
+
+              <!-- <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input autoComplete="name" cFormControl placeholder="Username" />
+              </c-input-group>
+              <c-input-group class="mb-3">
+                <span cInputGroupText>@</span>
+                <input autoComplete="email" cFormControl placeholder="Email" />
+              </c-input-group>
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilLockLocked"></svg>
+                </span>
+                <input autoComplete="new-password" cFormControl placeholder="Password" type="password" />
+              </c-input-group>
+              <c-input-group class="mb-4">
+                <span cInputGroupText>
+                  <svg cIcon name="cilLockLocked"></svg>
+                </span>
+                <input autoComplete="new-password" cFormControl placeholder="Repeat password" type="password" />
+              </c-input-group> -->
+              <div class="d-grid">
+                <button cButton color="success" (click)="save()">
+                  Create Account
+                  <c-spinner color="light" aria-hidden="true" size="sm" *ngIf="loadingService.isLoading"></c-spinner>
+                </button>
+              </div>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

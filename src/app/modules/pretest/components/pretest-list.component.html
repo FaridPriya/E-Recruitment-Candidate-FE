@@ -1,0 +1,48 @@
+<c-alert [(visible)]="visible"
+         [dismissible]="dismissible"
+         color="danger"
+         fade
+         *ngIf="visible">
+  {{errorMessage}}
+</c-alert>
+
+<div class="bg-light d-flex flex-row align-items-center">
+    <c-container>
+        <c-row class="justify-content-center">
+            <c-col md="6">
+                <c-card-group *ngIf="!isLoading">
+                    <c-card class="p-4">
+                        <c-card-body  *ngIf="!isCandidateAlreadyAnswer && !isStartTest && !isCandidateAlreadyAnswer">
+                            <h4 class="text-center">Aturan mengerjakan pretest</h4>
+                            <ol>
+                                <li>Pastikan koneksi internet Anda lancar dan stabil.</li>
+                                <li>Harap tidak melakukan refresh halaman selama mengerjakan tes.</li>
+                                <li>Selama mengerjakan tes, hindari berpindah menu atau tab lainnya.</li>
+                                <li>Selamat mengerjakan.</li>
+                            </ol>
+                            <div class="text-center">
+                                <button class="text-center" cButton type="submit" [disabled]="loadingService.isLoading" (click)="startTest()">
+                                    Start
+                                </button>
+                            </div>
+                        </c-card-body>
+                        <c-card-body *ngIf="isStartTest">
+                            <c-spinner color="secondary" *ngIf="loadingService.isLoading"></c-spinner>
+                            <h4 class="text-center">{{pretestQuestionItemDTO.Question}}</h4>
+                            <div class="text-center mt-4">
+                                <textarea cFormControl id="answer" rows="2" [(ngModel)]="answer"></textarea>
+                                <button cButton type="submit" class="mt-2" [disabled]="loadingService.isLoading" (click)="sendAnswer()">
+                                    Send
+                                </button>
+                            </div>
+                        </c-card-body>
+                        <c-card-body *ngIf="isFinishTest || isCandidateAlreadyAnswer" class="text-center">
+                            <h4>Tes sudah selesai</h4>
+                            <p>Silakan lihat status lamaran Anda secara berkala di menu "Candidate."</p>
+                        </c-card-body>
+                    </c-card>
+                </c-card-group>
+            </c-col>
+        </c-row>
+    </c-container>
+</div>

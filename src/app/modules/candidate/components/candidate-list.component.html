@@ -1,0 +1,33 @@
+<div class="bg-light d-flex flex-row align-items-center">
+    <c-container>
+        <c-row class="justify-content-center">
+            <c-col md="6">
+                <c-card-group>
+                    <c-card class="p-4">
+                        <c-card-body *ngIf="!candidate.IsAlreadyCVUpload">
+                            <h4 class="text-center">Silakan upload CV/resume anda</h4>
+                            <c-row class="p-4">
+                                <c-col xs="auto">
+                                    <input cFormControl id="file" type="file" accept=".pdf" (change)="onFileChange($event)" [disabled]="loadingService.isLoading"/>
+                                </c-col>
+                                <c-col xs="auto">
+                                    <button cButton type="submit" [disabled]="loadingService.isLoading" (click)="screeningCv()">
+                                        Upload
+                                    </button>
+                                </c-col>
+                            </c-row>
+                        </c-card-body>
+                        <c-card-body *ngIf="candidate.IsAlreadyCVUpload">
+                            <h4 class="text-center">Status lamaran anda saat ini :</h4>
+                            <div class="text-center">
+                                <c-badge [color]="candidate.Status == 'Pending' ? 'secondary' : 
+                                candidate.Status == 'Passed' ? 'success' :
+                                candidate.Status == 'Failed' ? 'danger' : 'dark'">{{candidate.Status}}</c-badge>
+                            </div>
+                        </c-card-body>
+                    </c-card>
+                </c-card-group>
+            </c-col>
+        </c-row>
+    </c-container>
+</div>
