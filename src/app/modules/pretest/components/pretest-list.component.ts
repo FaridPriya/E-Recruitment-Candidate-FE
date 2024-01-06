@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from 'src/app/services/Loading.Service';
 import { PretestQuestionItemDTO } from 'src/app/dto/PretestQuestionDTO';
 import { AnswerPost } from 'src/app/dto/candidate/AnswerPost';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-pretest-list',
@@ -65,6 +66,14 @@ export class PretestComponent implements OnInit  {
         })
     }
 
+    showPopupSuccess() {
+        Swal.fire({
+            title: "The answers have been successfully submitted",
+            text: "",
+            icon: "success"
+        });
+    }
+
     getQuestion(){
         this.pretestService.getQuestion(this.skipNumber).subscribe(data => {
             this.skipNumber++;
@@ -75,6 +84,7 @@ export class PretestComponent implements OnInit  {
                 this.isFinishTest = true;
                 this.isStartTest = false;
                 this.isCandidateAlreadyAnswer = true;
+                this.showPopupSuccess()
             }
             
         }, error => {

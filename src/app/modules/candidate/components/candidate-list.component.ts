@@ -4,6 +4,7 @@ import { freeSet } from '@coreui/icons';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CandidateDetailDTO } from 'src/app/dto/CandidteDetailDTO';
 import { LoadingService } from 'src/app/services/Loading.Service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-candidate-list',
@@ -58,8 +59,10 @@ export class CandidateComponent implements OnInit {
 
     screeningCv() {
         this.edenAiService.screeningCv(this.file).subscribe(data => {
+            this.showPopupSuccess();
             this.getCandidate()
           }, error => {
+            this.showPopupSuccess();
             this.getCandidate()
             console.log(error);
             if (error != null) {
@@ -70,6 +73,14 @@ export class CandidateComponent implements OnInit {
             }
             this.showError(error.error);
         })
+    }
+
+    showPopupSuccess() {
+        Swal.fire({
+            title: "Success upload",
+            text: "",
+            icon: "success"
+        });
     }
 
     showError(msg: string){

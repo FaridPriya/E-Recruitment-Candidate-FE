@@ -9,7 +9,7 @@ const routes: Routes = [
       path: '',
       component: PretestComponent,
       data: {
-        title: 'Pre-test'
+        title: 'Pretest'
       }
     }
   ];
